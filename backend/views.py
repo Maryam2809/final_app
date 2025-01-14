@@ -17,25 +17,9 @@ views = Blueprint ('views', __name__)
 def homepage():
     return "<h1>Welcome home</h1>"
 
-
 @views.route('/test')
 def new_note():
     return "hello"
-
-# @views.route('/add-note', methods=['POST'])
-# def add_note():
-#     data = request.get_json()  # Get JSON data sent from the frontend
-#     note_data = data.get('data')  # Extract the 'data' field
-
-#     if not note_data:
-#         return jsonify({"error": "Data field is required"}), 400
-
-#     # Save the note in the database
-#     new_note = Note(data=note_data)
-#     db.session.add(new_note)
-#     db.session.commit()
-
-#     return jsonify({"id": new_note.id, "data": new_note.data}), 201
 
 @views.route('/add-note', methods=['POST'])
 def add_note():
@@ -51,8 +35,6 @@ def add_note():
     db.session.commit()
 
     return jsonify({"id": new_note.id, "data": new_note.data, "folder": new_note.folder}), 201
-
-
 
 @views.route('/delete-note/<int:id>', methods=['DELETE'])
 def delete_note(id):
@@ -99,30 +81,6 @@ folders = {
 def get_folders():
     return jsonify(folders)
 
-# @views.route('/analytics-data', methods=['GET'])
-# def analytics_data():
-#     # Fetch notes from the database
-#     notes = Note.query.all()  # This fetches all notes from the database
-
-#     # Convert SQLAlchemy objects to dictionaries
-#     notes_data = [
-#         {
-#             "id": note.id,
-#             "data": note.data,
-#             "folder": note.folder,
-#             "date": note.created_at.isoformat() if note.created_at else None
-#         }
-#         for note in notes
-#     ]
-
-#     # Process notes data for charts
-#     pie_chart_data = process_notes_for_pie_chart(notes_data)
-#     bar_chart_data = process_notes_for_bar_chart(notes_data)
-
-#     return jsonify({
-#         "pie_chart": pie_chart_data,
-#         "bar_chart": bar_chart_data,
-#     })
 
 @views.route('/analytics-data')
 def analytics():
